@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hyros Organic Link Builder</title>
+<meta name="description" content="Build organic tracking links with the el, hcategory, htrafficsource, and he parameters.">
+<style>
+:root{--bg:#fff;--card:#f5f4f0;--raised:#fff;--text:#1f1e1d;--text2:#5f5e5a;--muted:#8a8984;--border:rgba(0,0,0,.14);--accent-bg:#e6f1fb;--accent:#0c447c;--ok-bg:#eaf3de;--ok:#27500a;--warn-bg:#faeeda;--warn:#633806;--danger:#c0392b;--btn-hover:#ebe9e3;}
+@media (prefers-color-scheme:dark){:root{--bg:#1c1c1a;--card:#262624;--raised:#2f2f2c;--text:#f1efe8;--text2:#b4b2a9;--muted:#888780;--border:rgba(255,255,255,.18);--accent-bg:#0c447c;--accent:#b5d4f4;--ok-bg:#27500a;--ok:#c0dd97;--warn-bg:#633806;--warn:#fac775;--danger:#f09595;--btn-hover:#3a3a36;}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:720px;margin:0 auto;padding:24px 16px 64px}
+.brand{font-weight:600;letter-spacing:.04em;font-size:14px;color:var(--text2);margin:0 0 20px}
+h1{font-size:26px;line-height:1.25;font-weight:600;margin:0 0 6px}
+.lead{color:var(--text2);margin:0 0 16px}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.tree{background:var(--card);border-radius:8px;padding:12px 14px;font-size:13px;line-height:1.9;margin-bottom:24px}
+.tree .note{color:var(--muted);font-family:system-ui,sans-serif}
+.panel{background:var(--card);border-radius:12px;padding:20px}
+label{display:block;font-size:13px;color:var(--text2);margin-bottom:4px}
+label .req{color:var(--danger)}label .opt{color:var(--muted)}
+input[type=text],select{width:100%;height:38px;padding:0 10px;border:1px solid var(--border);border-radius:8px;background:var(--raised);color:var(--text);font:inherit;font-size:15px}
+input:focus,select:focus,button:focus-visible{outline:2px solid #378add;outline-offset:1px}
+.hint{font-size:12px;color:var(--muted);margin:4px 0 0}
+.err{font-size:13px;color:var(--danger);margin:4px 0 0;display:none}
+.grid{display:grid;gap:16px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.sep{border-top:1px solid var(--border);padding-top:14px}
+.q{font-size:14px;font-weight:600;margin:0 0 8px}
+button{font:inherit;font-size:14px;padding:7px 14px;border:1px solid var(--border);border-radius:8px;background:transparent;color:var(--text);cursor:pointer}
+button:hover{background:var(--btn-hover)}
+button.on{background:var(--accent-bg);color:var(--accent);border-color:transparent}
+.result{margin-top:16px;background:var(--raised);border:1px solid var(--border);border-radius:8px;padding:14px}
+.rl{font-size:12px;color:var(--text2);margin:0 0 6px}.rl span{color:var(--muted)}
+.url{font-size:13px;margin:0;word-break:break-all}
+.row{margin-top:8px;display:flex;align-items:center;gap:10px}
+.msg{font-size:13px;color:var(--ok)}
+.rule{border-top:1px solid var(--border);margin:16px 0 14px}
+.script{font-size:13px;color:var(--text2);margin:16px 0 0}
+h2{font-size:18px;font-weight:600;margin:32px 0 4px}h2 small{font-weight:400;color:var(--text2);font-size:16px}
+.sub{font-size:14px;color:var(--text2);margin:0 0 12px}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px}
+.ex{border:1px solid var(--border);border-radius:8px;padding:12px;overflow-x:auto}
+.exg{display:grid;grid-template-columns:max-content max-content max-content;gap:8px 6px;justify-content:start;align-items:center;font-size:13px}
+.exg .h{font-family:system-ui,sans-serif;font-size:12px}
+.p{color:var(--danger)}
+.c{padding:2px 6px;border-radius:4px}.c1{background:var(--accent-bg);color:var(--accent)}.c2{background:var(--ok-bg);color:var(--ok)}.c3{background:var(--warn-bg);color:var(--warn)}
+.h1c{color:var(--accent)}.h2c{color:var(--ok)}.h3c{color:var(--warn)}
+</style>
+</head>
+<body>
+<main>
+<p class="brand">HYROS</p>
+<h1>Tag your organic links. See what each one earns.</h1>
+<p class="lead">Name every link you share. Hyros shows which ones bring leads and sales.</p>
+<div class="tree mono">
+<div>email <span class="note">traffic source: the whole group</span></div>
+<div style="padding-left:18px">newsletter <span class="note">category: a subfolder</span></div>
+<div style="padding-left:36px">feb2028_newsletter <span class="note">link name: one single link</span></div>
+</div>
+
+<div class="panel">
+<div class="grid">
+<div>
+<label for="base">Page URL</label>
+<input id="base" type="text" placeholder="https://example-website.com/offer" autocomplete="off">
+</div>
+<div>
+<label for="el">Link name (el) <span class="req">required</span></label>
+<input id="el" type="text" placeholder="feb2028_newsletter" autocomplete="off">
+<p class="hint">One name per link.</p>
+<p class="err" id="elerr">Enter a link name</p>
+</div>
+<div class="two">
+<div>
+<label for="src">Traffic source (htrafficsource) <span class="opt">optional</span></label>
+<input id="src" type="text" placeholder="email" autocomplete="off">
+<p class="hint">Groups everything of one kind.</p>
+</div>
+<div>
+<label for="cat">Category (hcategory) <span class="opt">optional</span></label>
+<input id="cat" type="text" placeholder="newsletter" autocomplete="off">
+<p class="hint">Groups link names, like a folder.</p>
+</div>
+</div>
+<div class="sep">
+<p class="q">Is this link for tracking emails?</p>
+<div style="display:flex;gap:8px">
+<button type="button" id="yes">Yes</button>
+<button type="button" id="no">No</button>
+</div>
+<div id="plat" style="display:none;margin-top:10px">
+<label for="platsel">Email platform</label>
+<select id="platsel"></select>
+<p class="hint">We add the right tag for your platform.</p>
+</div>
+</div>
+</div>
+
+<div class="result">
+<p class="rl">Final URL <span>(minimum, with just the el parameter)</span></p>
+<p class="url mono" id="out1"></p>
+<div class="row"><button type="button" data-copy="1">Copy link</button><span class="msg" id="msg1" role="status"></span></div>
+<div class="rule"></div>
+<p class="rl">Final URL v2 <span>(more granular tracking)</span></p>
+<p class="url mono" id="out2"></p>
+<div class="row"><button type="button" data-copy="2">Copy link</button><span class="msg" id="msg2" role="status"></span></div>
+<p class="script">The page this link opens must have your Hyros script.</p>
+</div>
+</div>
+
+<h2>Why add a traffic source and a category? <small>(htrafficsource and hcategory)</small></h2>
+<p class="sub">The <code>el</code> parameter alone is sufficient. Adding the other two lets you compare groups, not just single links. Here are three emails that share one traffic source:</p>
+<div class="ex">
+<div class="exg mono">
+<div class="h h1c">same in every row</div><div class="h h2c">changes by category</div><div class="h h3c">changes by email</div>
+<div><span class="p">?</span><span class="c c1">htrafficsource=email</span></div><div><span class="p">&amp;</span><span class="c c2">hcategory=retargeting</span></div><div><span class="p">&amp;</span><span class="c c3">el=sept_offer_email</span></div>
+<div><span class="p">?</span><span class="c c1">htrafficsource=email</span></div><div><span class="p">&amp;</span><span class="c c2">hcategory=nurture</span></div><div><span class="p">&amp;</span><span class="c c3">el=vsl_reminder_day2</span></div>
+<div><span class="p">?</span><span class="c c1">htrafficsource=email</span></div><div><span class="p">&amp;</span><span class="c c2">hcategory=webinar</span></div><div><span class="p">&amp;</span><span class="c c3">el=webinar_lastcall</span></div>
+</div>
+</div>
+<p class="sub" style="margin-top:12px">All three sit under one email source, so you can compare the performance of various categories of emails while still having them grouped together under the same traffic source. The <code>el</code> shows you exactly which email or offer achieved that.</p>
+</main>
+<script>
+var P=[["Active Campaign","%EMAIL%"],["Aweber","{!email}"],["CleverReach","{email}"],["ClickFunnels","#EMAIL#"],["ConvertKit","{{ subscriber.email_address }}"],["Drip","{{ subscriber.email }}"],["EverWebinar / WebinarJam","{ATTENDEE_EMAIL}"],["GetResponse","[[email]]"],["GoHighLevel","{{contact.email}}"],["HubSpot","{{contact.email}}"],["Infusionsoft / Keap","~Contact.Email~"],["Intercom","{{email}}"],["Kajabi","{{email}}"],["Kartra","{email}"],["Klaviyo","{{ email }}"],["Lemlist","{{email}}"],["Mailchimp","*|EMAIL|*"],["MaroPost","{{contact.email}}"],["OmniSend","[[contact.email]]"],["Ontraport","[Email]"],["SendGrid","[%email%]"],["SendLane","VAR_EMAIL"],["Sendy","[Email]"]];
+var mail=false,$=function(i){return document.getElementById(i)},sel=$('platsel');
+P.forEach(function(p,i){var o=document.createElement('option');o.value=i;o.textContent=p[0];sel.appendChild(o);});
+function setMail(v){mail=v;$('plat').style.display=v?'block':'none';$('yes').className=v?'on':'';$('no').className=v?'':'on';render();}
+function render(){var b=$('base').value.trim()||'https://example-website.com/offer',
+el=$('el').value.trim()||'feb2028_newsletter',src=$('src').value.trim()||'email',cat=$('cat').value.trim()||'newsletter',
+he=mail?'&he='+P[sel.value][1]:'',sep=b.indexOf('?')>-1?'&':'?';
+$('out1').textContent=b+sep+'el='+el+he;
+$('out2').textContent=b+sep+'el='+el+'&hcategory='+cat+'&htrafficsource='+src+he;}
+function copyText(t){if(navigator.clipboard&&window.isSecureContext)return navigator.clipboard.writeText(t);
+return new Promise(function(res,rej){var a=document.createElement('textarea');a.value=t;a.style.position='fixed';a.style.opacity='0';document.body.appendChild(a);a.select();try{document.execCommand('copy')?res():rej()}catch(e){rej(e)}document.body.removeChild(a);});}
+function copyIt(n){if(!$('el').value.trim()){$('elerr').style.display='block';$('el').focus();return;}
+$('elerr').style.display='none';var m=$('msg'+n);
+copyText($('out'+n).textContent).then(function(){m.textContent='Copied';setTimeout(function(){m.textContent='';},2000);},function(){m.textContent='Select the link and copy it';});}
+['base','el','src','cat'].forEach(function(id){$(id).addEventListener('input',function(){$('elerr').style.display='none';render();});});
+sel.addEventListener('change',render);
+$('yes').addEventListener('click',function(){setMail(true)});$('no').addEventListener('click',function(){setMail(false)});
+document.querySelectorAll('[data-copy]').forEach(function(b){b.addEventListener('click',function(){copyIt(b.getAttribute('data-copy'))});});
+setMail(false);
+</script>
+</body>
+</html>
