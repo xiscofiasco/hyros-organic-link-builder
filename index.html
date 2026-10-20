@@ -10,7 +10,7 @@
 @media (prefers-color-scheme:dark){:root{--bg:#14142b;--card:#1e1e3d;--raised:#25254a;--text:#eeeefb;--text2:#b5b5dc;--muted:#8888b5;--border:rgba(255,255,255,.18);--accent-bg:#3a39b8;--accent:#cfcffd;--ok-bg:#27500a;--ok:#c0dd97;--warn-bg:#633806;--warn:#fac775;--danger:#f09595;--btn-hover:#2f2f5c;--logo-filter:brightness(1.35);}}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
-main{max-width:1960px;margin:0 auto;padding:20px 24px 48px}
+main{max-width:1960px;margin:0 auto;padding:20px 24px 14px}
 .layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);grid-template-areas:"lh rh" "lbody rbody";column-gap:32px;align-items:start}
 .lh{grid-area:lh}.lbody{grid-area:lbody}.rh{grid-area:rh;padding-top:56px}.rbody{grid-area:rbody}
 @media (max-width:1100px){.layout{grid-template-columns:minmax(0,1fr);grid-template-areas:"lh" "lbody" "rh" "rbody"}.rh{padding-top:0;margin-top:24px}}
@@ -60,6 +60,10 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:
 .p{display:inline-block;width:18px;color:var(--danger)}
 .c{padding:2px 6px;border-radius:4px}.c1{background:var(--accent-bg);color:var(--accent)}.c2{background:var(--ok-bg);color:var(--ok)}.c3{background:var(--warn-bg);color:var(--warn)}
 .h1c{color:var(--accent)}.h2c{color:var(--ok)}.h3c{color:var(--warn)}
+.actions{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:14px}
+.actions a{display:inline-block;padding:9px 22px;border:1.5px solid var(--brand);border-radius:8px;color:var(--accent);font-size:15px;font-weight:600;text-decoration:none}
+.actions a:hover{background:var(--brand);color:#fff}
+.actions a:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
 .map{display:grid;grid-template-columns:max-content max-content 1fr;gap:6px 10px;align-items:center;font-size:14px;margin:10px 0}
 .map .eq{color:var(--text2)}
 .map .t{font-weight:600;font-family:system-ui,sans-serif}
@@ -164,6 +168,11 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:
 </section>
 
 </div>
+<nav class="actions" aria-label="Hyros links">
+<a href="https://app.hyros.com/public/login" target="_blank" rel="noopener">Log in Hyros</a>
+<a href="https://support.hyros.com/" target="_blank" rel="noopener">Chat with Hyros</a>
+<a href="https://docs.hyros.com/docs/organic-tracking" target="_blank" rel="noopener">Documentation</a>
+</nav>
 </main>
 <script>
 var P=[["Active Campaign","%EMAIL%"],["Aweber","{!email}"],["CleverReach","{email}"],["ClickFunnels","#EMAIL#"],["ConvertKit","{{ subscriber.email_address }}"],["Drip","{{ subscriber.email }}"],["EverWebinar / WebinarJam","{ATTENDEE_EMAIL}"],["GetResponse","[[email]]"],["GoHighLevel","{{contact.email}}"],["HubSpot","{{contact.email}}"],["Infusionsoft / Keap","~Contact.Email~"],["Intercom","{{email}}"],["Kajabi","{{email}}"],["Kartra","{email}"],["Klaviyo","{{ email }}"],["Lemlist","{{email}}"],["Mailchimp","*|EMAIL|*"],["MaroPost","{{contact.email}}"],["OmniSend","[[contact.email]]"],["Ontraport","[Email]"],["SendGrid","[%email%]"],["SendLane","VAR_EMAIL"],["Sendy","[Email]"]];
