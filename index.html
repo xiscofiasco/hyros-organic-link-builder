@@ -6,12 +6,12 @@
 <title>Hyros Organic Link Builder</title>
 <meta name="description" content="Build organic tracking links with the el, hcategory, htrafficsource, and he parameters.">
 <style>
-:root{--bg:#fff;--card:#f5f4f0;--raised:#fff;--text:#1f1e1d;--text2:#5f5e5a;--muted:#8a8984;--border:rgba(0,0,0,.14);--accent-bg:#e6f1fb;--accent:#0c447c;--ok-bg:#eaf3de;--ok:#27500a;--warn-bg:#faeeda;--warn:#633806;--danger:#c0392b;--btn-hover:#ebe9e3;}
-@media (prefers-color-scheme:dark){:root{--bg:#1c1c1a;--card:#262624;--raised:#2f2f2c;--text:#f1efe8;--text2:#b4b2a9;--muted:#888780;--border:rgba(255,255,255,.18);--accent-bg:#0c447c;--accent:#b5d4f4;--ok-bg:#27500a;--ok:#c0dd97;--warn-bg:#633806;--warn:#fac775;--danger:#f09595;--btn-hover:#3a3a36;}}
+:root{--brand:#5150f6;--bg:#eeeefb;--card:#fff;--raised:#f6f6fe;--text:#1d1d3a;--text2:#55557a;--muted:#7c7ca3;--border:rgba(81,80,246,.22);--accent-bg:#dcdcfb;--accent:#2f2fb8;--ok-bg:#eaf3de;--ok:#27500a;--warn-bg:#faeeda;--warn:#633806;--danger:#c0392b;--btn-hover:#e4e4fb;--logo-filter:none;}
+@media (prefers-color-scheme:dark){:root{--bg:#14142b;--card:#1e1e3d;--raised:#25254a;--text:#eeeefb;--text2:#b5b5dc;--muted:#8888b5;--border:rgba(255,255,255,.18);--accent-bg:#3a39b8;--accent:#cfcffd;--ok-bg:#27500a;--ok:#c0dd97;--warn-bg:#633806;--warn:#fac775;--danger:#f09595;--btn-hover:#2f2f5c;--logo-filter:brightness(1.35);}}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
 main{max-width:720px;margin:0 auto;padding:24px 16px 64px}
-.brand{font-weight:600;letter-spacing:.04em;font-size:14px;color:var(--text2);margin:0 0 20px}
+.brand{margin:0 0 24px}.brand img{display:block;height:40px;width:auto;filter:var(--logo-filter)}
 h1{font-size:26px;line-height:1.25;font-weight:600;margin:0 0 6px}
 .lead{color:var(--text2);margin:0 0 16px}
 .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
@@ -21,7 +21,11 @@ h1{font-size:26px;line-height:1.25;font-weight:600;margin:0 0 6px}
 label{display:block;font-size:13px;color:var(--text2);margin-bottom:4px}
 label .req{color:var(--danger)}label .opt{color:var(--muted)}
 input[type=text],select{width:100%;height:38px;padding:0 10px;border:1px solid var(--border);border-radius:8px;background:var(--raised);color:var(--text);font:inherit;font-size:15px}
-input:focus,select:focus,button:focus-visible{outline:2px solid #378add;outline-offset:1px}
+input:focus,select:focus,button:focus-visible{outline:2px solid var(--brand);outline-offset:1px}
+button.on{background:var(--brand);color:#fff;border-color:transparent}
+button[data-copy]{background:var(--brand);color:#fff;border-color:transparent}
+button[data-copy]:hover{background:#4241d6}
+h1{color:var(--text)}h2{color:var(--text)}
 .hint{font-size:12px;color:var(--muted);margin:4px 0 0}
 .err{font-size:13px;color:var(--danger);margin:4px 0 0;display:none}
 .grid{display:grid;gap:16px}
@@ -30,7 +34,6 @@ input:focus,select:focus,button:focus-visible{outline:2px solid #378add;outline-
 .q{font-size:14px;font-weight:600;margin:0 0 8px}
 button{font:inherit;font-size:14px;padding:7px 14px;border:1px solid var(--border);border-radius:8px;background:transparent;color:var(--text);cursor:pointer}
 button:hover{background:var(--btn-hover)}
-button.on{background:var(--accent-bg);color:var(--accent);border-color:transparent}
 .result{margin-top:16px;background:var(--raised);border:1px solid var(--border);border-radius:8px;padding:14px}
 .rl{font-size:12px;color:var(--text2);margin:0 0 6px}.rl span{color:var(--muted)}
 .url{font-size:13px;margin:0;word-break:break-all}
@@ -51,7 +54,7 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:
 </head>
 <body>
 <main>
-<p class="brand">HYROS</p>
+<p class="brand"><img src="hyros-logo.png" alt="Hyros" width="133" height="40"></p>
 <h1>Tag your organic links. See what each one earns.</h1>
 <p class="lead">Name every link you share. Hyros shows which ones bring leads and sales.</p>
 <div class="tree mono">
