@@ -10,16 +10,19 @@
 @media (prefers-color-scheme:dark){:root{--bg:#14142b;--card:#1e1e3d;--raised:#25254a;--text:#eeeefb;--text2:#b5b5dc;--muted:#8888b5;--border:rgba(255,255,255,.18);--accent-bg:#3a39b8;--accent:#cfcffd;--ok-bg:#27500a;--ok:#c0dd97;--warn-bg:#633806;--warn:#fac775;--danger:#f09595;--btn-hover:#2f2f5c;--logo-filter:brightness(1.35);}}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
-main{max-width:1080px;margin:0 auto;padding:24px 16px 64px}
-.brand{margin:0 0 24px}.brand img{display:block;height:40px;width:auto;filter:var(--logo-filter)}
-h1{font-size:26px;line-height:1.25;font-weight:600;margin:0 0 6px;color:var(--text)}
-.lead{color:var(--text2);margin:0 0 16px}
+main{max-width:1960px;margin:0 auto;padding:20px 24px 48px}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:32px;align-items:start}
+@media (max-width:1100px){.layout{grid-template-columns:minmax(0,1fr)}}
+.brand{margin:0 0 16px}.brand img{display:block;height:40px;width:auto;filter:var(--logo-filter)}
+h1{font-size:26px;line-height:1.25;font-weight:600;margin:0 0 4px;color:var(--text)}
+.lead{color:var(--text2);margin:0 0 14px}
 .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
-.intro{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:24px}
-.intro .uses p{margin:0 0 8px}.intro .uses p:last-child{margin:0}
+.intro{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 18px;margin-bottom:8px}
+.intro .uses p{margin:0 0 6px}.intro .uses p:last-child{margin:0}
 .intro .uses b{font-weight:600}
-.defs{display:grid;grid-template-columns:max-content 1fr;gap:10px 14px;align-items:baseline;border-top:1px solid var(--border);margin-top:14px;padding-top:14px;font-size:15px}
+.defs{display:grid;grid-template-columns:max-content 1fr;gap:8px 14px;align-items:baseline;border-top:1px solid var(--border);margin-top:12px;padding-top:12px;font-size:15px}
 .defs div:nth-child(even){color:var(--text2)}
+.lb{font-size:22px;font-weight:600;margin:0 0 10px;color:var(--text)}
 .panel{background:var(--card);border-radius:12px;padding:20px;border:1px solid var(--border)}
 label{display:block;font-size:13px;color:var(--text2);margin-bottom:4px}
 label .req{color:var(--danger)}label .opt{color:var(--muted)}
@@ -27,42 +30,45 @@ input[type=text],select{width:100%;height:38px;padding:0 10px;border:1px solid v
 input:focus,select:focus,button:focus-visible{outline:2px solid var(--brand);outline-offset:1px}
 .hint{font-size:12px;color:var(--muted);margin:4px 0 0}
 .err{font-size:13px;color:var(--danger);margin:4px 0 0;display:none}
-.grid{display:grid;gap:16px}
-.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
-.sep{border-top:1px solid var(--border);padding-top:14px}
+.grid{display:grid;gap:14px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.sep{border-top:1px solid var(--border);padding-top:12px}
 .q{font-size:14px;font-weight:600;margin:0 0 8px}
 button{font:inherit;font-size:14px;padding:7px 14px;border:1px solid var(--border);border-radius:8px;background:transparent;color:var(--text);cursor:pointer}
 button:hover{background:var(--btn-hover)}
 button.on{background:var(--brand);color:#fff;border-color:transparent}
 button[data-copy]{background:var(--brand);color:#fff;border-color:transparent}
 button[data-copy]:hover{background:#4241d6}
-.result{margin-top:16px;background:var(--raised);border:1px solid var(--border);border-radius:8px;padding:16px}
+.result{margin-top:16px;background:var(--raised);border:1px solid var(--border);border-radius:8px;padding:14px}
 .rl{font-size:15px;font-weight:600;margin:0}.rl span{font-weight:400;color:var(--text2);font-size:14px}
-.urlbox{background:var(--accent-bg);border:1.5px solid var(--brand);border-radius:8px;padding:12px 14px;margin:8px 0 10px}
-.url{font-size:14px;font-weight:600;margin:0;word-break:break-all;color:var(--text)}
+.urlbox{background:var(--accent-bg);border:1.5px solid var(--brand);border-radius:8px;padding:10px 12px;margin:6px 0 8px}
+.url{font-size:13px;font-weight:600;margin:0;word-break:break-all;color:var(--text)}
 .row{display:flex;align-items:center;gap:10px}
 .msg{font-size:13px;color:var(--ok)}
-.or{display:flex;align-items:center;gap:12px;margin:20px 0;color:var(--text2);font-weight:600;font-size:14px}
+.or{display:flex;align-items:center;gap:12px;margin:14px 0;color:var(--text2);font-weight:600;font-size:14px}
 .or:before,.or:after{content:"";flex:1;border-top:1px solid var(--border)}
 .or small{font-weight:400;font-size:12px;color:var(--muted)}
-.script{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:700;color:var(--danger);margin:18px 0 0}
+.script{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:700;color:var(--danger);margin:14px 0 0}
 .script svg{flex:none}
-h2{font-size:18px;font-weight:600;margin:32px 0 4px;color:var(--text)}h2 small{font-weight:400;color:var(--text2);font-size:16px}
-.sub{font-size:14px;color:var(--text2);margin:0 0 12px;max-width:980px}
+h2{font-size:18px;font-weight:600;margin:20px 0 4px;color:var(--text)}h2 small{font-weight:400;color:var(--text2);font-size:16px}
+.sub{font-size:14px;color:var(--text2);margin:0 0 10px}
 code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px}
 .ex{border:1px solid var(--border);background:var(--card);border-radius:8px;padding:12px;overflow-x:auto}
-.exg{display:grid;grid-template-columns:max-content max-content max-content;gap:8px 6px;justify-content:start;align-items:center;font-size:13px}
-.exg .h{font-family:system-ui,sans-serif;font-size:12px;font-weight:600}
-.p{color:var(--danger);margin-right:.7ch}
+.exg{display:grid;grid-template-columns:max-content max-content max-content;gap:8px 8px;justify-content:start;align-items:center;font-size:13px}
+.exg .h{font-family:system-ui,sans-serif;font-size:12px;font-weight:600;padding-left:24px}
+.p{display:inline-block;width:18px;color:var(--danger)}
 .c{padding:2px 6px;border-radius:4px}.c1{background:var(--accent-bg);color:var(--accent)}.c2{background:var(--ok-bg);color:var(--ok)}.c3{background:var(--warn-bg);color:var(--warn)}
 .h1c{color:var(--accent)}.h2c{color:var(--ok)}.h3c{color:var(--warn)}
-.map{display:grid;grid-template-columns:max-content max-content 1fr;gap:6px 10px;align-items:center;font-size:14px;margin:12px 0}
+.map{display:grid;grid-template-columns:max-content max-content 1fr;gap:6px 10px;align-items:center;font-size:14px;margin:10px 0}
 .map .eq{color:var(--text2)}
-.map .t{font-weight:600}
+.map .t{font-weight:600;font-family:system-ui,sans-serif}
 </style>
 </head>
 <body>
 <main>
+<div class="layout">
+
+<section class="left">
 <p class="brand"><img src="hyros-logo.png" alt="Hyros" width="133" height="40"></p>
 <h1>Tag your organic links. See what each one earns.</h1>
 <p class="lead">Track every link you share. Hyros shows which ones bring conversions.</p>
@@ -80,6 +86,29 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:
 </div>
 </div>
 
+<h2>Why add a traffic source and a category? <small>(htrafficsource and hcategory)</small></h2>
+<p class="sub">The EL parameter alone is sufficient. However, you could obtain the same effect by creating a URL rule directly in Hyros.</p>
+<p class="sub">Adding the other two parameters lets you compare divisions and subdivisions of your traffic more easily. Here are three links that share one traffic source:</p>
+<div class="ex">
+<div class="exg mono">
+<div class="h h1c">common source</div><div class="h h2c">distinct categories</div><div class="h h3c">specific offer/purpose/placement</div>
+<div><span class="p">?</span><span class="c c1">htrafficsource=email</span></div><div><span class="p">&amp;</span><span class="c c2">hcategory=retargeting</span></div><div><span class="p">&amp;</span><span class="c c3">el=sept_offer_email</span></div>
+<div><span class="p">?</span><span class="c c1">htrafficsource=email</span></div><div><span class="p">&amp;</span><span class="c c2">hcategory=nurture</span></div><div><span class="p">&amp;</span><span class="c c3">el=vsl_reminder_day2</span></div>
+<div><span class="p">?</span><span class="c c1">htrafficsource=email</span></div><div><span class="p">&amp;</span><span class="c c2">hcategory=webinar</span></div><div><span class="p">&amp;</span><span class="c c3">el=webinar_lastcall</span></div>
+</div>
+</div>
+<p class="sub" style="margin-top:12px">You can have multiple EL parameters grouped under a category and multiple categories grouped under a traffic source.</p>
+<p class="sub">All of these will be reflected in Hyros in the Performance Report accordingly:</p>
+<div class="map mono">
+<span class="c c1">htrafficsource</span><span class="eq">=</span><span class="t">Traffic Source</span>
+<span class="c c2">hcategory</span><span class="eq">=</span><span class="t">Campaign</span>
+<span class="c c3">EL</span><span class="eq">=</span><span class="t">Adset</span>
+</div>
+<p class="sub">You can compare this hierarchy to that of the ads, in which multiple ads are grouped in adsets, which are then grouped in campaigns.</p>
+</section>
+
+<section class="right">
+<h2 class="lb">Link Builder</h2>
 <div class="panel">
 <div class="grid">
 <div>
@@ -128,26 +157,9 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:
 <p class="script"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>The page this link opens must have your Hyros script.</p>
 </div>
 </div>
+</section>
 
-<h2>Why add a traffic source and a category? <small>(htrafficsource and hcategory)</small></h2>
-<p class="sub">The EL parameter alone is sufficient. However, you could obtain the same effect by creating a URL rule directly in Hyros.</p>
-<p class="sub">Adding the other two parameters lets you compare divisions and subdivisions of your traffic more easily. Here are three links that share one traffic source:</p>
-<div class="ex">
-<div class="exg mono">
-<div class="h h1c">common source</div><div class="h h2c">distinct categories</div><div class="h h3c">specific offer/purpose/placement</div>
-<div><span class="p">?</span><span class="c c1">htrafficsource=email</span></div><div><span class="p">&amp;</span><span class="c c2">hcategory=retargeting</span></div><div><span class="p">&amp;</span><span class="c c3">el=sept_offer_email</span></div>
-<div><span class="p">?</span><span class="c c1">htrafficsource=email</span></div><div><span class="p">&amp;</span><span class="c c2">hcategory=nurture</span></div><div><span class="p">&amp;</span><span class="c c3">el=vsl_reminder_day2</span></div>
-<div><span class="p">?</span><span class="c c1">htrafficsource=email</span></div><div><span class="p">&amp;</span><span class="c c2">hcategory=webinar</span></div><div><span class="p">&amp;</span><span class="c c3">el=webinar_lastcall</span></div>
 </div>
-</div>
-<p class="sub" style="margin-top:14px">You can have multiple EL parameters grouped under a category and multiple categories grouped under a traffic source.</p>
-<p class="sub">All of these will be reflected in Hyros in the Performance Report accordingly:</p>
-<div class="map mono">
-<span class="c c1">htrafficsource</span><span class="eq">=</span><span class="t" style="font-family:system-ui,sans-serif">Traffic Source</span>
-<span class="c c2">hcategory</span><span class="eq">=</span><span class="t" style="font-family:system-ui,sans-serif">Campaign</span>
-<span class="c c3">EL</span><span class="eq">=</span><span class="t" style="font-family:system-ui,sans-serif">Adset</span>
-</div>
-<p class="sub">You can compare this hierarchy to that of the ads, in which multiple ads are grouped in adsets, which are then grouped in campaigns.</p>
 </main>
 <script>
 var P=[["Active Campaign","%EMAIL%"],["Aweber","{!email}"],["CleverReach","{email}"],["ClickFunnels","#EMAIL#"],["ConvertKit","{{ subscriber.email_address }}"],["Drip","{{ subscriber.email }}"],["EverWebinar / WebinarJam","{ATTENDEE_EMAIL}"],["GetResponse","[[email]]"],["GoHighLevel","{{contact.email}}"],["HubSpot","{{contact.email}}"],["Infusionsoft / Keap","~Contact.Email~"],["Intercom","{{email}}"],["Kajabi","{{email}}"],["Kartra","{email}"],["Klaviyo","{{ email }}"],["Lemlist","{{email}}"],["Mailchimp","*|EMAIL|*"],["MaroPost","{{contact.email}}"],["OmniSend","[[contact.email]]"],["Ontraport","[Email]"],["SendGrid","[%email%]"],["SendLane","VAR_EMAIL"],["Sendy","[Email]"]];
