@@ -11,8 +11,9 @@
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
 main{max-width:1960px;margin:0 auto;padding:20px 24px 48px}
-.layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:32px;align-items:start}
-@media (max-width:1100px){.layout{grid-template-columns:minmax(0,1fr)}}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);grid-template-areas:"lh rh" "lbody rbody";column-gap:32px;align-items:start}
+.lh{grid-area:lh}.lbody{grid-area:lbody}.rh{grid-area:rh;align-self:stretch;display:flex;align-items:flex-end}.rbody{grid-area:rbody}
+@media (max-width:1100px){.layout{grid-template-columns:minmax(0,1fr);grid-template-areas:"lh" "lbody" "rh" "rbody"}.rh{margin-top:24px}.lb{font-size:44px!important}}
 .brand{margin:0 0 16px}.brand img{display:block;height:40px;width:auto;filter:var(--logo-filter)}
 h1{font-size:26px;line-height:1.25;font-weight:600;margin:0 0 4px;color:var(--text)}
 .lead{color:var(--text2);margin:0 0 14px}
@@ -22,7 +23,7 @@ h1{font-size:26px;line-height:1.25;font-weight:600;margin:0 0 4px;color:var(--te
 .intro .uses b{font-weight:600}
 .defs{display:grid;grid-template-columns:max-content 1fr;gap:8px 14px;align-items:baseline;border-top:1px solid var(--border);margin-top:12px;padding-top:12px;font-size:15px}
 .defs div:nth-child(even){color:var(--text2)}
-.lb{font-size:22px;font-weight:600;margin:0 0 10px;color:var(--text)}
+.lb{font-size:112px;line-height:1;font-weight:600;margin:0 0 14px;color:var(--text);letter-spacing:-.01em}
 .panel{background:var(--card);border-radius:12px;padding:20px;border:1px solid var(--border)}
 label{display:block;font-size:13px;color:var(--text2);margin-bottom:4px}
 label .req{color:var(--danger)}label .opt{color:var(--muted)}
@@ -68,11 +69,13 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:
 <main>
 <div class="layout">
 
-<section class="left">
+<header class="lh">
 <p class="brand"><img src="hyros-logo.png" alt="Hyros" width="133" height="40"></p>
 <h1>Tag your organic links. See what each one earns.</h1>
 <p class="lead">Track every link you share. Hyros shows which ones bring conversions.</p>
+</header>
 
+<section class="lbody">
 <div class="intro">
 <div class="uses">
 <p><b>Want to see how many people convert from emails?</b> Use this to configure what your campaign CTA should contain.</p>
@@ -107,8 +110,9 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:
 <p class="sub">You can compare this hierarchy to that of the ads, in which multiple ads are grouped in adsets, which are then grouped in campaigns.</p>
 </section>
 
-<section class="right">
-<h2 class="lb">Link Builder</h2>
+<div class="rh"><h2 class="lb">Link Builder</h2></div>
+
+<section class="rbody">
 <div class="panel">
 <div class="grid">
 <div>
