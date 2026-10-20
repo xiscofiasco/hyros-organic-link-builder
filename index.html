@@ -12,7 +12,8 @@
 body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
 main{max-width:1960px;margin:0 auto;padding:20px 24px 14px}
 .layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);grid-template-areas:"lh rh" "lbody rbody";column-gap:32px;align-items:start}
-.lh{grid-area:lh}.lbody{grid-area:lbody}.rh{grid-area:rh;padding-top:56px}.rbody{grid-area:rbody}
+.lh{grid-area:lh}.lbody{grid-area:lbody}.rh{grid-area:rh;padding-top:56px;display:flex;justify-content:space-between;align-items:flex-start;gap:16px}.rbody{grid-area:rbody}
+[hidden]{display:none!important}
 @media (max-width:1100px){.layout{grid-template-columns:minmax(0,1fr);grid-template-areas:"lh" "lbody" "rh" "rbody"}.rh{padding-top:0;margin-top:24px}}
 .brand{margin:0 0 16px}.brand img{display:block;height:40px;width:auto;filter:var(--logo-filter)}
 h1{font-size:32px;line-height:1.25;font-weight:600;margin:0 0 4px;color:var(--text)}
@@ -68,6 +69,20 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:
 .map{display:grid;grid-template-columns:max-content max-content 1fr;gap:6px 10px;align-items:center;font-size:14px;margin:10px 0}
 .map .eq{color:var(--text2)}
 .map .t{font-weight:600;font-family:system-ui,sans-serif}
+.tabbtn{flex:none;white-space:nowrap;margin-top:4px;padding:8px 16px;border:1.5px solid var(--brand);color:var(--accent);font-weight:600}
+.tabbtn:hover{background:var(--brand);color:#fff}
+button.pri{background:var(--brand);color:#fff;border-color:transparent}
+button.pri:hover{background:#4241d6}
+.row{flex-wrap:wrap}
+.warnbox{display:flex;gap:10px;align-items:flex-start;background:var(--warn-bg);color:var(--warn);border-radius:8px;padding:12px 14px;font-size:14px;font-weight:600}
+.warnbox svg{flex:none;margin-top:2px}
+.toolbar{margin:14px 0 4px}
+.item{background:var(--raised);border:1px solid var(--border);border-radius:8px;padding:14px;margin-top:12px}
+.ihead{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px}
+.ihead b{font-size:15px;font-weight:600;word-break:break-word}
+.ihead .tag{font-size:12px;color:var(--accent);background:var(--accent-bg);border-radius:4px;padding:1px 7px}
+.ihead .date{font-size:12px;color:var(--muted)}
+.empty{color:var(--text2);font-size:14px;margin:14px 0 0}
 </style>
 </head>
 <body>
@@ -115,9 +130,17 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:
 <p class="sub">You can compare this hierarchy to that of the ads, in which multiple ads are grouped in adsets, which are then grouped in campaigns.</p>
 </section>
 
-<div class="rh"><h2 class="lb">Link Builder</h2><p class="lead">Follow the steps below to obtain granular organic attribution.</p></div>
+<div class="rh"><div><h2 class="lb" id="rtitle">Link Builder</h2><p class="lead" id="rsub">Follow the steps below to obtain granular organic attribution.</p></div><button type="button" class="tabbtn" id="tabbtn">Saved URLs (0)</button></div>
 
-<section class="rbody">
+<section class="rbody" id="savedview" hidden>
+<div class="panel">
+<div class="warnbox" role="note"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Your saved URLs are stored only in this browser. Export to CSV at the end of every session, because clearing your browser data or switching devices will erase or hide them.</span></div>
+<div class="row toolbar"><button type="button" class="pri" id="exp">Export to CSV</button><span class="msg" id="expmsg" role="status"></span></div>
+<div id="list"></div>
+</div>
+</section>
+
+<section class="rbody" id="builderview">
 <div class="panel">
 <div class="grid">
 <div>
@@ -159,11 +182,11 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:
 <div class="result">
 <p class="rl">Final URL <span>(minimal, with just the EL parameter)</span></p>
 <div class="urlbox"><p class="url mono" id="out1"></p></div>
-<div class="row"><button type="button" data-copy="1">Copy link</button><span class="msg" id="msg1" role="status"></span></div>
+<div class="row"><button type="button" data-copy="1">Copy link</button><button type="button" data-save="1">Save</button><span class="msg" id="msg1" role="status"></span></div>
 <div class="or">OR <small>choose one</small></div>
 <p class="rl">Final URL v2 <span>(more granular tracking)</span></p>
 <div class="urlbox"><p class="url mono" id="out2"></p></div>
-<div class="row"><button type="button" data-copy="2">Copy link</button><span class="msg" id="msg2" role="status"></span></div>
+<div class="row"><button type="button" data-copy="2">Copy link</button><button type="button" data-save="2">Save</button><span class="msg" id="msg2" role="status"></span></div>
 <p class="script"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>The page this link opens must have your Hyros script installed.</p>
 </div>
 </div>
@@ -188,16 +211,61 @@ $('out1').textContent=b+sep+'el='+el+he;
 $('out2').textContent=b+sep+'el='+el+'&hcategory='+cat+'&htrafficsource='+src+he;}
 function copyText(t){if(navigator.clipboard&&window.isSecureContext)return navigator.clipboard.writeText(t);
 return new Promise(function(res,rej){var a=document.createElement('textarea');a.value=t;a.style.position='fixed';a.style.opacity='0';document.body.appendChild(a);a.select();try{document.execCommand('copy')?res():rej()}catch(e){rej(e)}document.body.removeChild(a);});}
-function copyIt(n){var okb=$('base').value.trim(),oke=$('el').value.trim();
+function check(){var okb=$('base').value.trim(),oke=$('el').value.trim();
 $('baseerr').style.display=okb?'none':'block';$('elerr').style.display=oke?'none':'block';
-if(!okb){$('base').focus();return;}if(!oke){$('el').focus();return;}
+if(!okb){$('base').focus();return false;}if(!oke){$('el').focus();return false;}return true;}
+function flash(id,t){var m=$(id);m.textContent=t;setTimeout(function(){m.textContent='';},2000);}
+var KEY='hyros_organic_links_v1',view='builder';
+function loadAll(){try{var d=JSON.parse(localStorage.getItem(KEY)||'[]');return Array.isArray(d)?d:[];}catch(e){return [];}}
+function storeAll(a){try{localStorage.setItem(KEY,JSON.stringify(a));return true;}catch(e){return false;}}
+function storageOk(){try{localStorage.setItem('__t','1');localStorage.removeItem('__t');return true;}catch(e){return false;}}
+function updateTab(){$('tabbtn').textContent=view==='saved'?'Link Builder':'Saved URLs ('+loadAll().length+')';}
+function showView(v){view=v;var s=v==='saved';
+$('savedview').hidden=!s;$('builderview').hidden=s;
+$('rtitle').textContent=s?'Saved URLs':'Link Builder';
+$('rsub').textContent=s?'Links you saved in this browser.':'Follow the steps below to obtain granular organic attribution.';
+if(s)renderList();updateTab();}
+function saveIt(n){if(!check())return;var url=$('out'+n).textContent,a=loadAll();
+if(a.some(function(x){return x.url===url;})){flash('msg'+n,'Already saved');return;}
+a.unshift({id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),name:$('el').value.trim(),version:n==='1'?'Minimal':'Granular',url:url,base:$('base').value.trim(),el:$('el').value.trim(),src:$('src').value.trim(),cat:$('cat').value.trim(),mail:mail,plat:sel.value,saved:new Date().toISOString()});
+if(!storeAll(a)){flash('msg'+n,'Saving is blocked in this browser');return;}
+updateTab();flash('msg'+n,'Saved');}
+function mk(tag,cls,txt){var e=document.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e;}
+function renderList(){var box=$('list'),a=loadAll();box.textContent='';
+if(!storageOk()){box.appendChild(mk('p','empty','Saving is turned off in this browser (private window or blocked site data), so links cannot be stored here.'));return;}
+if(!a.length){box.appendChild(mk('p','empty','No saved URLs yet. Build a link and press Save.'));return;}
+a.forEach(function(x){var it=mk('div','item'),h=mk('div','ihead');
+h.appendChild(mk('b',null,x.name));h.appendChild(mk('span','tag',x.version));
+h.appendChild(mk('span','date',new Date(x.saved).toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'})));
+var ub=mk('div','urlbox');ub.appendChild(mk('p','url mono',x.url));
+var r=mk('div','row');
+[['copy','Copy link'],['load','Load into builder'],['del','Delete']].forEach(function(p){var b=mk('button',null,p[1]);b.type='button';b.setAttribute('data-act',p[0]);b.setAttribute('data-id',x.id);r.appendChild(b);});
+it.appendChild(h);it.appendChild(ub);it.appendChild(r);box.appendChild(it);});}
+function csvCell(v){v=String(v==null?'':v);if(/^[=+@\t\r-]/.test(v))v="'"+v;return '"'+v.replace(/"/g,'""')+'"';}
+function exportCsv(){var a=loadAll();if(!a.length){flash('expmsg','Nothing to export yet');return;}
+var rows=[['Name','Version','URL','Page URL','el','htrafficsource','hcategory','Saved at']].concat(a.map(function(x){return [x.name,x.version,x.url,x.base,x.el,x.src,x.cat,x.saved];}));
+var csv='﻿'+rows.map(function(r){return r.map(csvCell).join(',');}).join('\r\n');
+var u=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'})),l=document.createElement('a');
+l.href=u;l.download='hyros-organic-links-'+new Date().toISOString().slice(0,10)+'.csv';document.body.appendChild(l);l.click();document.body.removeChild(l);
+setTimeout(function(){URL.revokeObjectURL(u);},1000);flash('expmsg','Exported');}
+function copyIt(n){if(!check())return;
 var m=$('msg'+n);
 copyText($('out'+n).textContent).then(function(){m.textContent='Copied';setTimeout(function(){m.textContent='';},2000);},function(){m.textContent='Select the link and copy it';});}
 ['base','el','src','cat'].forEach(function(id){$(id).addEventListener('input',function(){$('baseerr').style.display='none';$('elerr').style.display='none';render();});});
 sel.addEventListener('change',render);
 $('yes').addEventListener('click',function(){setMail(true)});$('no').addEventListener('click',function(){setMail(false)});
 document.querySelectorAll('[data-copy]').forEach(function(b){b.addEventListener('click',function(){copyIt(b.getAttribute('data-copy'))});});
-setMail(false);
+document.querySelectorAll('[data-save]').forEach(function(b){b.addEventListener('click',function(){saveIt(b.getAttribute('data-save'))});});
+$('tabbtn').addEventListener('click',function(){showView(view==='saved'?'builder':'saved');});
+$('exp').addEventListener('click',exportCsv);
+$('list').addEventListener('click',function(e){var b=e.target.closest('button[data-act]');if(!b)return;
+var id=b.getAttribute('data-id'),act=b.getAttribute('data-act'),a=loadAll(),it=a.filter(function(x){return x.id===id;})[0];if(!it)return;
+if(act==='del'){if(b.getAttribute('data-armed')!=='1'){b.setAttribute('data-armed','1');b.textContent='Click again to delete';setTimeout(function(){b.removeAttribute('data-armed');b.textContent='Delete';},3000);return;}
+storeAll(a.filter(function(x){return x.id!==id;}));renderList();updateTab();}
+else if(act==='copy'){copyText(it.url).then(function(){b.textContent='Copied';setTimeout(function(){b.textContent='Copy link';},2000);},function(){b.textContent='Select the link and copy it';});}
+else if(act==='load'){$('base').value=it.base||'';$('el').value=it.el||'';$('src').value=it.src||'';$('cat').value=it.cat||'';
+setMail(!!it.mail);if(it.mail)sel.value=it.plat;$('baseerr').style.display='none';$('elerr').style.display='none';render();showView('builder');}});
+setMail(false);updateTab();
 </script>
 </body>
 </html>
