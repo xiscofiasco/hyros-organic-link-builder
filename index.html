@@ -95,7 +95,7 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:
 </div>
 
 <h2>Why add a traffic source and a category? <small>(htrafficsource and hcategory)</small></h2>
-<p class="sub">The EL parameter alone is sufficient. However, you could obtain the same effect by creating a URL rule directly in Hyros.</p>
+<p class="sub">The <code class="c c3">el</code> parameter alone is sufficient. However, you could obtain the same effect by creating a URL rule directly in Hyros.</p>
 <p class="sub">Adding the other two parameters lets you compare divisions and subdivisions of your traffic more easily. Here are three links that share one traffic source:</p>
 <div class="ex">
 <div class="exg mono">
@@ -105,12 +105,12 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:
 <div><span class="p">?</span><span class="c c3">el=webinar_lastcall</span></div><div><span class="p">&amp;</span><span class="c c2">hcategory=webinar</span></div><div><span class="p">&amp;</span><span class="c c1">htrafficsource=email</span></div>
 </div>
 </div>
-<p class="sub" style="margin-top:12px">You can have multiple EL parameters grouped under a category and multiple categories grouped under a traffic source.</p>
+<p class="sub" style="margin-top:12px">You can have multiple <code class="c c3">el</code> parameters grouped under a category and multiple categories grouped under a traffic source.</p>
 <p class="sub">All of these will be reflected in Hyros in the Performance Report accordingly:</p>
 <div class="map mono">
 <span class="c c1">htrafficsource</span><span class="eq">=</span><span class="t">Traffic Source</span>
 <span class="c c2">hcategory</span><span class="eq">=</span><span class="t">Campaign</span>
-<span class="c c3">EL</span><span class="eq">=</span><span class="t">Adset</span>
+<span class="c c3">el</span><span class="eq">=</span><span class="t">Adset</span>
 </div>
 <p class="sub">You can compare this hierarchy to that of the ads, in which multiple ads are grouped in adsets, which are then grouped in campaigns.</p>
 </section>
@@ -121,8 +121,9 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:
 <div class="panel">
 <div class="grid">
 <div>
-<label for="base">Page URL</label>
+<label for="base">Page URL <span class="req">required</span></label>
 <input id="base" type="text" placeholder="https://example-website.com/offer" autocomplete="off">
+<p class="err" id="baseerr">Enter the page URL</p>
 </div>
 <div>
 <label for="el">EL parameter <span class="req">required</span></label>
@@ -187,10 +188,12 @@ $('out1').textContent=b+sep+'el='+el+he;
 $('out2').textContent=b+sep+'el='+el+'&hcategory='+cat+'&htrafficsource='+src+he;}
 function copyText(t){if(navigator.clipboard&&window.isSecureContext)return navigator.clipboard.writeText(t);
 return new Promise(function(res,rej){var a=document.createElement('textarea');a.value=t;a.style.position='fixed';a.style.opacity='0';document.body.appendChild(a);a.select();try{document.execCommand('copy')?res():rej()}catch(e){rej(e)}document.body.removeChild(a);});}
-function copyIt(n){if(!$('el').value.trim()){$('elerr').style.display='block';$('el').focus();return;}
-$('elerr').style.display='none';var m=$('msg'+n);
+function copyIt(n){var okb=$('base').value.trim(),oke=$('el').value.trim();
+$('baseerr').style.display=okb?'none':'block';$('elerr').style.display=oke?'none':'block';
+if(!okb){$('base').focus();return;}if(!oke){$('el').focus();return;}
+var m=$('msg'+n);
 copyText($('out'+n).textContent).then(function(){m.textContent='Copied';setTimeout(function(){m.textContent='';},2000);},function(){m.textContent='Select the link and copy it';});}
-['base','el','src','cat'].forEach(function(id){$(id).addEventListener('input',function(){$('elerr').style.display='none';render();});});
+['base','el','src','cat'].forEach(function(id){$(id).addEventListener('input',function(){$('baseerr').style.display='none';$('elerr').style.display='none';render();});});
 sel.addEventListener('change',render);
 $('yes').addEventListener('click',function(){setMail(true)});$('no').addEventListener('click',function(){setMail(false)});
 document.querySelectorAll('[data-copy]').forEach(function(b){b.addEventListener('click',function(){copyIt(b.getAttribute('data-copy'))});});
