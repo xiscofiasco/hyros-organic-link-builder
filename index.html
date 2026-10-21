@@ -37,6 +37,10 @@ h1{font-size:32px;line-height:1.25;font-weight:600;margin:0 0 4px;color:var(--te
 .defs{display:grid;grid-template-columns:max-content 1fr;gap:8px 14px;align-items:baseline;border-top:1px solid var(--border);margin-top:12px;padding-top:12px;font-size:15px}
 .defs div:nth-child(even){color:var(--text2)}
 .lb{font-size:32px;line-height:1.25;font-weight:600;margin:0 0 4px;color:var(--text)}
+.lbody:not(.open) .more{display:none}
+.lm{display:inline-flex;align-items:center;gap:6px;margin-top:12px;padding:7px 16px;border:1.5px solid var(--brand);color:var(--accent);font-weight:600}
+.lm:hover{background:var(--brand);color:#fff}
+.lm svg{transition:transform .15s}.lbody.open .lm svg{transform:rotate(180deg)}
 .panel{background:var(--card);border-radius:12px;padding:20px;border:1px solid var(--border)}
 label{display:block;font-size:13px;color:var(--text2);margin-bottom:4px}
 label .req{color:var(--danger)}label .opt{color:var(--muted)}
@@ -109,20 +113,22 @@ button.pri:hover{background:#4241d6}
 <p class="lead">Track every link you share. Hyros shows which ones bring conversions.</p>
 </header>
 
-<section class="lbody">
+<section class="lbody" id="lbody">
 <div class="intro">
 <div class="uses">
 <p><b>Want to see how many people convert from emails?</b> Use this to configure what your campaign CTA should contain.</p>
 <p><b>Not sure how much traffic your affiliates send your way?</b> Have them use a link that reveals that.</p>
 <p><b>Want to distinguish between organic post clicks and people using the links you leave in comments?</b> Use this tool!</p>
 </div>
-<div class="defs">
+<button type="button" class="lm" id="lmbtn" aria-expanded="false" aria-controls="more-defs more-why"><span id="lmlbl">Learn more</span><svg id="lmic" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button>
+<div class="defs more" id="more-defs">
 <div><code class="c c3">el</code></div><div>this will apply a tag in Hyros; it's the minimum necessary for organic tracking (aside from the URL rules in Hyros)</div>
 <div><code class="c c1">htrafficsource</code></div><div>groups all tags of a specific type - think of it like a folder of tags</div>
 <div><code class="c c2">hcategory</code></div><div>an intermediate between the above two parameters if needed - think of this as a subfolder, when there are distinct families of tags that fall under the same traffic source</div>
 </div>
 </div>
 
+<div class="more" id="more-why">
 <h2>Why add a traffic source and a category? <small>(htrafficsource and hcategory)</small></h2>
 <p class="sub">The <code class="c c3">el</code> parameter alone is sufficient. However, you could obtain the same effect by creating a URL rule directly in Hyros.</p>
 <p class="sub">Adding the other two parameters lets you compare divisions and subdivisions of your traffic more easily. Here are three links that share one traffic source:</p>
@@ -142,6 +148,7 @@ button.pri:hover{background:#4241d6}
 <span class="c c3">el</span><span class="eq">=</span><span class="t">Adset</span>
 </div>
 <p class="sub">You can compare this hierarchy to that of the ads, in which multiple ads are grouped in adsets, which are then grouped in campaigns.</p>
+</div>
 </section>
 
 <div class="rh"><div><h2 class="lb" id="rtitle">Link Builder</h2><p class="lead" id="rsub">Follow the steps below to obtain granular organic attribution.</p></div><button type="button" class="tabbtn" id="tabbtn">Saved URLs (0)</button></div>
@@ -197,7 +204,7 @@ button.pri:hover{background:#4241d6}
 <p class="rl">Final URL <span>(minimal, with just the EL parameter)</span></p>
 <div class="urlbox"><p class="url mono" id="out1"></p></div>
 <div class="row"><button type="button" data-copy="1">Copy link</button><button type="button" data-save="1">Save</button><span class="msg" id="msg1" role="status"></span></div>
-<div class="or">OR <small>choose one</small></div>
+<div class="or">OR <small>(choose one)</small></div>
 <p class="rl">Final URL v2 <span>(more granular tracking)</span></p>
 <div class="urlbox"><p class="url mono" id="out2"></p></div>
 <div class="row"><button type="button" data-copy="2">Copy link</button><button type="button" data-save="2">Save</button><span class="msg" id="msg2" role="status"></span></div>
@@ -286,6 +293,11 @@ function paintTheme(){var d=curTheme()==='dark';setHid($('i-sun'),!d);setHid($('
 $('themebtn').addEventListener('click',function(){var n=curTheme()==='dark'?'light':'dark';root.setAttribute('data-theme',n);try{localStorage.setItem('hyros_theme',n);}catch(e){}paintTheme();});
 if(mq.addEventListener)mq.addEventListener('change',paintTheme);
 paintTheme();
+var LKEY='hyros_learn_more_open';
+function setLearn(o,save){$('lbody').classList.toggle('open',o);$('lmbtn').setAttribute('aria-expanded',o?'true':'false');$('lmlbl').textContent=o?'Show less':'Learn more';
+if(save){try{localStorage.setItem(LKEY,o?'1':'0');}catch(e){}}}
+$('lmbtn').addEventListener('click',function(){setLearn(!$('lbody').classList.contains('open'),true);});
+try{setLearn(localStorage.getItem(LKEY)==='1',false);}catch(e){setLearn(false,false);}
 setMail(false);updateTab();
 </script>
 </body>
