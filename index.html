@@ -186,6 +186,7 @@ button.pri:hover{background:#4241d6}
 <p class="hint">Acts as a sub-folder, if needed</p>
 </div>
 </div>
+<p class="hint" id="spacenote" style="display:none;margin:-6px 0 0">Spaces are replaced with underscores in the link.</p>
 <div class="sep">
 <p class="q">Is this link for tracking emails?</p>
 <div style="display:flex;gap:8px">
@@ -225,8 +226,11 @@ var P=[["Active Campaign","%EMAIL%"],["Aweber","{!email}"],["CleverReach","{emai
 var mail=false,$=function(i){return document.getElementById(i)},sel=$('platsel');
 P.forEach(function(p,i){var o=document.createElement('option');o.value=i;o.textContent=p[0];sel.appendChild(o);});
 function setMail(v){mail=v;$('plat').style.display=v?'block':'none';$('yes').className=v?'on':'';$('no').className=v?'':'on';render();}
+function clean(v){return String(v||'').trim().replace(/\s+/g,'_');}
 function render(){var b=$('base').value.trim()||'https://example-website.com/offer',
-el=$('el').value.trim()||'feb2028_newsletter',src=$('src').value.trim()||'email',cat=$('cat').value.trim()||'newsletter',
+el=clean($('el').value)||'feb2028_newsletter',src=clean($('src').value)||'email',cat=clean($('cat').value)||'newsletter',
+changed=['el','src','cat'].some(function(i){var v=$(i).value.trim();return v!==clean(v);});
+$('spacenote').style.display=changed?'block':'none';
 he=mail?'&he='+P[sel.value][1]:'',sep=b.indexOf('?')>-1?'&':'?';
 $('out1').textContent=b+sep+'el='+el+he;
 $('out2').textContent=b+sep+'el='+el+'&hcategory='+cat+'&htrafficsource='+src+he;}
@@ -248,7 +252,7 @@ $('rsub').textContent=s?'Links you saved in this browser.':'Follow the steps bel
 if(s)renderList();updateTab();}
 function saveIt(n){if(!check())return;var url=$('out'+n).textContent,a=loadAll();
 if(a.some(function(x){return x.url===url;})){flash('msg'+n,'Already saved');return;}
-a.unshift({id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),name:$('el').value.trim(),version:n==='1'?'Minimal':'Granular',url:url,base:$('base').value.trim(),el:$('el').value.trim(),src:$('src').value.trim(),cat:$('cat').value.trim(),mail:mail,plat:sel.value,saved:new Date().toISOString()});
+a.unshift({id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),name:clean($('el').value),version:n==='1'?'Minimal':'Granular',url:url,base:$('base').value.trim(),el:clean($('el').value),src:clean($('src').value),cat:clean($('cat').value),mail:mail,plat:sel.value,saved:new Date().toISOString()});
 if(!storeAll(a)){flash('msg'+n,'Saving is blocked in this browser');return;}
 updateTab();flash('msg'+n,'Saved');}
 function mk(tag,cls,txt){var e=document.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e;}
