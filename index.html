@@ -168,25 +168,29 @@ button.pri:hover{background:#4241d6}
 <label for="base">Page URL <span class="req">required</span></label>
 <input id="base" type="text" placeholder="https://example-website.com/offer" autocomplete="off">
 <p class="err" id="baseerr">Enter the page URL</p>
+<p class="hint" id="httpsnote" style="display:none">We added https:// to the start of your link.</p>
 </div>
 <div>
 <label for="el">EL parameter <span class="req">required</span></label>
 <input id="el" type="text" placeholder="feb2028_newsletter" autocomplete="off">
 <p class="err" id="elerr">Enter the EL parameter</p>
+<p class="err" id="badel">The characters &amp; # ? = % aren't allowed here, because they break links. We removed them.</p>
 </div>
 <div class="two">
 <div>
 <label for="src">Traffic source (<em>htrafficsource</em>) <span class="opt">optional</span></label>
 <input id="src" type="text" placeholder="email" autocomplete="off">
 <p class="hint">Groups all tags, like a folder.</p>
+<p class="err" id="badsrc">The characters &amp; # ? = % aren't allowed here, because they break links. We removed them.</p>
 </div>
 <div>
 <label for="cat">Category (<em>hcategory</em>) <span class="opt">optional</span></label>
 <input id="cat" type="text" placeholder="newsletter" autocomplete="off">
 <p class="hint">Acts as a sub-folder, if needed</p>
+<p class="err" id="badcat">The characters &amp; # ? = % aren't allowed here, because they break links. We removed them.</p>
 </div>
 </div>
-<p class="hint" id="spacenote" style="display:none;margin:-6px 0 0">Spaces are replaced with underscores in the link.</p>
+<p class="hint" id="spacenote" style="display:none;margin:-6px 0 0">In the link, spaces become underscores and letters are lowercase.</p>
 <div class="sep">
 <p class="q">Is this link for tracking emails?</p>
 <div style="display:flex;gap:8px">
@@ -226,14 +230,26 @@ var P=[["Active Campaign","%EMAIL%"],["Aweber","{!email}"],["CleverReach","{emai
 var mail=false,$=function(i){return document.getElementById(i)},sel=$('platsel');
 P.forEach(function(p,i){var o=document.createElement('option');o.value=i;o.textContent=p[0];sel.appendChild(o);});
 function setMail(v){mail=v;$('plat').style.display=v?'block':'none';$('yes').className=v?'on':'';$('no').className=v?'':'on';render();}
-function clean(v){return String(v||'').trim().replace(/\s+/g,'_');}
-function render(){var b=$('base').value.trim()||'https://example-website.com/offer',
-el=clean($('el').value)||'feb2028_newsletter',src=clean($('src').value)||'email',cat=clean($('cat').value)||'newsletter',
-changed=['el','src','cat'].some(function(i){var v=$(i).value.trim();return v!==clean(v);});
+var BAD=/[&#?=%]/g,BADT=/[&#?=%]/,SCHEME=/^[a-z][a-z0-9+.\-]*:\/\//i;
+function clean(v){return String(v||'').replace(BAD,'').trim().replace(/\s+/g,'_');}
+function fin(v){return clean(v).toLowerCase();}
+function render(){var raw=$('base').value.trim(),
+pre=!!raw&&!SCHEME.test(raw),
+b=raw?(pre?'https://'+raw.replace(/^\/+/,''):raw):'https://example-website.com/offer',
+el=fin($('el').value),src=fin($('src').value),cat=fin($('cat').value),
+used=!!(el||src||cat),e=el||'feb2028_newsletter',
+changed=['el','src','cat'].some(function(i){var v=$(i).value.trim();return v!==fin(v);}),
+he=mail?'&he='+P[sel.value][1]:'',sep=b.indexOf('?')>-1?'&':'?',
+v2='el='+e;
 $('spacenote').style.display=changed?'block':'none';
-he=mail?'&he='+P[sel.value][1]:'',sep=b.indexOf('?')>-1?'&':'?';
-$('out1').textContent=b+sep+'el='+el+he;
-$('out2').textContent=b+sep+'el='+el+'&hcategory='+cat+'&htrafficsource='+src+he;}
+$('httpsnote').style.display=pre?'block':'none';
+if(used){if(cat)v2+='&hcategory='+cat;if(src)v2+='&htrafficsource='+src;}
+else{v2+='&hcategory=newsletter&htrafficsource=email';}
+$('out1').textContent=b+sep+'el='+e+he;
+$('out2').textContent=b+sep+v2+he;}
+function guard(id){var i=$(id),v=i.value,m=$('bad'+id);
+if(BADT.test(v)){var pos=i.selectionStart==null?v.length:i.selectionStart,np=v.slice(0,pos).replace(BAD,'').length;
+i.value=v.replace(BAD,'');try{i.setSelectionRange(np,np);}catch(x){}m.style.display='block';clearTimeout(m._t);m._t=setTimeout(function(){m.style.display='none';},5000);}}
 function copyText(t){return new Promise(function(res,rej){var ok=false,a=document.createElement('textarea');
 try{a.value=t;a.setAttribute('readonly','');a.style.cssText='position:fixed;top:0;left:0;opacity:0;';document.body.appendChild(a);a.focus();a.select();a.setSelectionRange(0,t.length);ok=document.execCommand('copy');}catch(e){ok=false;}
 if(a.parentNode)a.parentNode.removeChild(a);
@@ -255,7 +271,7 @@ $('rsub').textContent=s?'Links you saved in this browser.':'Follow the steps bel
 if(s)renderList();updateTab();}
 function saveIt(n){if(!check())return;var url=$('out'+n).textContent,a=loadAll();
 if(a.some(function(x){return x.url===url;})){flash('msg'+n,'Already saved');return;}
-a.unshift({id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),name:clean($('el').value),version:n==='1'?'Minimal':'Granular',url:url,base:$('base').value.trim(),el:clean($('el').value),src:clean($('src').value),cat:clean($('cat').value),mail:mail,plat:sel.value,saved:new Date().toISOString()});
+a.unshift({id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),name:fin($('el').value),version:n==='1'?'Minimal':'Granular',url:url,base:$('base').value.trim(),el:fin($('el').value),src:fin($('src').value),cat:fin($('cat').value),mail:mail,plat:sel.value,saved:new Date().toISOString()});
 if(!storeAll(a)){flash('msg'+n,'Saving is blocked in this browser');return;}
 updateTab();flash('msg'+n,'Saved');}
 function mk(tag,cls,txt){var e=document.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e;}
@@ -279,7 +295,7 @@ setTimeout(function(){URL.revokeObjectURL(u);},1000);flash('expmsg','Exported');
 function copyIt(n){if(!check())return;
 var m=$('msg'+n);
 copyText($('out'+n).textContent).then(function(){m.textContent='Copied';setTimeout(function(){m.textContent='';},2000);},function(){m.textContent='Select the link and copy it';});}
-['base','el','src','cat'].forEach(function(id){$(id).addEventListener('input',function(){$('baseerr').style.display='none';$('elerr').style.display='none';render();});});
+['base','el','src','cat'].forEach(function(id){$(id).addEventListener('input',function(){$('baseerr').style.display='none';$('elerr').style.display='none';if(id!=='base')guard(id);render();});});
 sel.addEventListener('change',render);
 $('yes').addEventListener('click',function(){setMail(true)});$('no').addEventListener('click',function(){setMail(false)});
 document.querySelectorAll('[data-copy]').forEach(function(b){b.addEventListener('click',function(){copyIt(b.getAttribute('data-copy'))});});
@@ -291,7 +307,7 @@ var id=b.getAttribute('data-id'),act=b.getAttribute('data-act'),a=loadAll(),it=a
 if(act==='del'){if(b.getAttribute('data-armed')!=='1'){b.setAttribute('data-armed','1');b.textContent='Click again to delete';setTimeout(function(){b.removeAttribute('data-armed');b.textContent='Delete';},3000);return;}
 storeAll(a.filter(function(x){return x.id!==id;}));renderList();updateTab();}
 else if(act==='copy'){copyText(it.url).then(function(){b.textContent='Copied';setTimeout(function(){b.textContent='Copy link';},2000);},function(){b.textContent='Select the link and copy it';});}
-else if(act==='load'){$('base').value=it.base||'';$('el').value=it.el||'';$('src').value=it.src||'';$('cat').value=it.cat||'';
+else if(act==='load'){$('base').value=it.base||'';$('el').value=String(it.el||'').replace(BAD,'');$('src').value=String(it.src||'').replace(BAD,'');$('cat').value=String(it.cat||'').replace(BAD,'');['badel','badsrc','badcat'].forEach(function(k){$(k).style.display='none';});
 setMail(!!it.mail);if(it.mail)sel.value=it.plat;$('baseerr').style.display='none';$('elerr').style.display='none';render();showView('builder');}});
 var root=document.documentElement,mq=window.matchMedia('(prefers-color-scheme: dark)');
 function curTheme(){var t=root.getAttribute('data-theme');return t||(mq.matches?'dark':'light');}
